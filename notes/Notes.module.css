@@ -1,0 +1,19 @@
+
+.container {
+  padding: 16px;
+}
+
+.searchInput {
+  margin-bottom: 12px;
+  padding: 6px;
+  width: 100%;
+}
+
+
+.noteButton {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
