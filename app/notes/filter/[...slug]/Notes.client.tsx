@@ -8,7 +8,7 @@ import { fetchNotes } from '@/lib/api';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import { Pagination } from '@/components/Pagination/Pagination';
-import Link from 'next/link'; 
+import Link from 'next/link';
 
 type Props = {
   tag?: string;
@@ -20,9 +20,12 @@ export default function NotesClient({ tag }: Props) {
   const [debounced, setDebounced] = useState('');
 
   useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setDebounced(search);
-      setPage(1);
     }, 500);
 
     return () => clearTimeout(timer);
@@ -45,7 +48,11 @@ export default function NotesClient({ tag }: Props) {
         <button>Create note +</button>
       </Link>
 
-      <NoteList notes={data.notes} />
+      {data.notes.length > 0 ? (
+        <NoteList notes={data.notes} />
+      ) : (
+        <p>No notes found.</p>
+      )}
 
       {data.totalPages > 1 && (
         <Pagination
