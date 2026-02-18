@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       openGraph: {
         title: 'Note not found',
         description: 'The requested note does not exist in NoteHub.',
-        url: `https://your-vercel-url.vercel.app/notes/${params.id}`,
+        url: `https://08-zustand-1vb4-jqdoseqjj-tetiana-furmanets.vercel.app/notes/${params.id}`,
         images: [
           {
             url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
