@@ -1,20 +1,26 @@
 // app/(public routes)/notes/filter/[...slug]/page.tsx
 
+import type { Metadata } from 'next';
 import {
   QueryClient,
-  dehydrate,
   HydrationBoundary,
+  dehydrate,
 } from '@tanstack/react-query';
+
 import NotesClient from './Notes.client';
 import { fetchNotes } from '@/lib/api';
-import type { Metadata } from 'next';
 
 type Props = {
-  params: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = params.slug?.[0] ?? 'all';
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+
+  const tag = resolvedParams.slug?.[0] ?? 'all';
+
   return {
     title: `Notes - Filter: ${tag}`,
     description: `View notes filtered by ${tag} in NoteHub.`,
@@ -32,7 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function FilterPage({ params }: Props) {
-  const tag = params.slug?.[0];
+  const resolvedParams = await params;
+
+  const tag = resolvedParams.slug?.[0];
   const normalizedTag = tag === 'all' ? undefined : tag;
 
   const queryClient = new QueryClient();

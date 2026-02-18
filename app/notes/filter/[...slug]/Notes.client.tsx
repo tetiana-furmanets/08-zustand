@@ -41,7 +41,6 @@ export default function NotesClient({ tag }: Props) {
     <>
       <SearchBox value={search} onChange={setSearch} />
 
-      {/* Кнопка переходу на створення нової нотатки */}
       <Link href="/notes/action/create">
         <button>Create note +</button>
       </Link>

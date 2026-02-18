@@ -2,12 +2,14 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { NoteTag } from '@/types/note';
 
 type Draft = {
   title: string;
   content: string;
-  tag: string;
+  tag: NoteTag;
 };
+
 
 type NoteStore = {
   draft: Draft;

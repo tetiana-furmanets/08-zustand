@@ -17,11 +17,16 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
   const { draft, setDraft, clearDraft } = useNoteStore();
 
-  const [form, setForm] = useState({
-    title: draft.title,
-    content: draft.content,
-    tag: draft.tag,
-  });
+  const [form, setForm] = useState<{
+  title: string;
+  content: string;
+  tag: NoteTag;
+}>({
+  title: draft.title,
+  content: draft.content,
+  tag: draft.tag,
+});
+
 
   useEffect(() => {
     setForm({
@@ -40,11 +45,21 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setDraft({ ...form, [name]: value }); // зберігаємо у draft
+ const handleChange = (
+  e: React.ChangeEvent<
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  >
+) => {
+  const { name, value } = e.target;
+
+  const updatedForm = {
+    ...form,
+    [name]: name === 'tag' ? (value as NoteTag) : value,
   };
+
+  setForm(updatedForm);
+  setDraft(updatedForm);
+};
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
